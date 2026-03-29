@@ -1,1 +1,167 @@
-# Mufa1
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mufa — منصة الشحن المخفض</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --blue:#1B3FEE;--blue2:#2B52F5;--blue-l:#EEF2FF;--blue-s:#F5F7FF;
+  --green:#05B486;--green-l:#E6FAF5;
+  --orange:#FF6B35;--orange-l:#FFF0EB;
+  --red:#E5323C;--red-l:#FFF0F0;
+  --text:#0B1126;--text2:#4A5270;--text3:#8C93AD;
+  --border:#E8EAF2;--surf:#FFF;--bg:#F7F8FC;
+  --r:14px;--rl:20px;
+}
+
+html,body{
+  font-family:'Tajawal',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100%;
+  overflow:hidden
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+  max-width:430px;
+  margin:0 auto;
+  position:relative
+}
+
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;padding-bottom:80px}
+.screen.active{display:flex}
+
+/* HEADER */
+.sbar{background:var(--blue);padding:12px 20px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.sbar-time{font-size:15px;font-weight:800;color:#fff}
+.hdr{background:var(--blue);padding:4px 20px 22px;flex-shrink:0}
+.hdr-row{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;color:#fff}
+
+.avatar{width:36px;height:36px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.22);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.avatar svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.8}
+
+.hdr-title h1{color:#fff;font-size:21px;font-weight:800}
+.hdr-title p{color:rgba(255,255,255,.6);font-size:12.5px}
+
+.card{background:var(--surf);border-radius:var(--rl);border:1px solid var(--border);overflow:hidden}
+.card-hdr{padding:14px 16px 0;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ct{font-size:14px;font-weight:700}
+.cs{font-size:11px;color:var(--text3);margin-top:1px}
+
+.card-body{padding:0 16px 16px}
+
+/* SAVED */
+.saved{display:flex;align-items:center;gap:10px;background:var(--blue-s);border:1.5px solid #C8D4FD;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;cursor:pointer}
+.saved.on{border-color:var(--blue);background:var(--blue-l)}
+
+.saved-name{font-size:13px;font-weight:700;color:var(--blue)}
+.saved-addr{font-size:11px;color:var(--text2)}
+.chk{width:20px;height:20px;background:var(--blue);border-radius:50%;opacity:0}
+.saved.on .chk{opacity:1}
+
+/* FORM */
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.f label{font-size:11px;font-weight:700;color:var(--text2)}
+
+.f input,.f select{
+  font-family:'Tajawal',sans-serif;
+  font-size:14px;
+  padding:11px 13px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.f input:focus{border-color:var(--blue);background:#fff;outline:none}
+
+/* BUTTON */
+.btn-sub{
+  width:100%;
+  background:var(--blue);
+  color:#fff;
+  font-family:'Tajawal',sans-serif;
+  font-size:16px;
+  font-weight:800;
+  padding:16px;
+  border:none;
+  border-radius:var(--r);
+}
+
+.btn-sub:active{transform:scale(.98)}
+
+/* NAV */
+.bnav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:430px;
+  background:#fff;
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+</style>
+</head>
+
+<body>
+
+<div class="screen active" id="s-new">
+
+  <div class="sbar">
+    <div class="sbar-time">9:41</div>
+  </div>
+
+  <div class="hdr">
+    <div class="hdr-title">
+      <h1>MUFA</h1>
+      <p>منصة الشحن المخفض</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="ct">بيانات المرسل</div>
+      <div class="cs">المعلومات الأساسية</div>
+    </div>
+
+    <div class="card-body">
+      <div class="saved on">
+        <div>
+          <div class="saved-name">عبدالله الأحمدي</div>
+          <div class="saved-addr">الرياض</div>
+        </div>
+        <div class="chk"></div>
+      </div>
+
+      <div class="f">
+        <label>الاسم</label>
+        <input value="عبدالله الأحمدي">
+      </div>
+
+      <div class="f">
+        <label>الجوال</label>
+        <input value="0501234567">
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:16px">
+    <button class="btn-sub">التالي</button>
+  </div>
+
+</div>
+
+</body>
+</html>
