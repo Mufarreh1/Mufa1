@@ -2,166 +2,545 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Mufa — منصة الشحن المخفض</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mufa — بوليصة الشحن</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-
+*{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --blue:#1B3FEE;--blue2:#2B52F5;--blue-l:#EEF2FF;--blue-s:#F5F7FF;
+  --blue:#1B3FEE;--blue2:#2B52F5;--blue-l:#EEF2FF;
   --green:#05B486;--green-l:#E6FAF5;
-  --orange:#FF6B35;--orange-l:#FFF0EB;
-  --red:#E5323C;--red-l:#FFF0F0;
+  --orange:#FF6B35;--yellow:#F5A623;
+  --red:#E5323C;
   --text:#0B1126;--text2:#4A5270;--text3:#8C93AD;
   --border:#E8EAF2;--surf:#FFF;--bg:#F7F8FC;
-  --r:14px;--rl:20px;
 }
-
-html,body{
-  font-family:'Tajawal',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  height:100%;
-  overflow:hidden
-}
-
 body{
-  display:flex;
-  flex-direction:column;
-  max-width:430px;
+  font-family:'Tajawal',sans-serif;
+  background:#fff;
+  color:var(--text);
+  width:794px; /* A4 width at 96dpi */
   margin:0 auto;
-  position:relative
+  padding:0;
 }
 
-.screen{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;padding-bottom:80px}
-.screen.active{display:flex}
+/* ── PRINT ── */
+@media print{
+  body{width:210mm;margin:0}
+  .no-print{display:none!important}
+  .page-break{page-break-before:always}
+}
+
+/* ── PRINT BUTTON ── */
+.print-bar{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:10px 32px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:999;
+}
+.print-bar span{font-size:13px;color:var(--text3);font-weight:600}
+.btn-print{
+  background:var(--blue);color:#fff;border:none;border-radius:10px;
+  padding:9px 22px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:7px;
+}
+.btn-print svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── DOCUMENT ── */
+.doc{padding:32px 40px 48px}
 
 /* HEADER */
-.sbar{background:var(--blue);padding:12px 20px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.sbar-time{font-size:15px;font-weight:800;color:#fff}
-.hdr{background:var(--blue);padding:4px 20px 22px;flex-shrink:0}
-.hdr-row{display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;color:#fff}
-
-.avatar{width:36px;height:36px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.22);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.avatar svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.8}
-
-.hdr-title h1{color:#fff;font-size:21px;font-weight:800}
-.hdr-title p{color:rgba(255,255,255,.6);font-size:12.5px}
-
-.card{background:var(--surf);border-radius:var(--rl);border:1px solid var(--border);overflow:hidden}
-.card-hdr{padding:14px 16px 0;display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.ct{font-size:14px;font-weight:700}
-.cs{font-size:11px;color:var(--text3);margin-top:1px}
-
-.card-body{padding:0 16px 16px}
-
-/* SAVED */
-.saved{display:flex;align-items:center;gap:10px;background:var(--blue-s);border:1.5px solid #C8D4FD;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;cursor:pointer}
-.saved.on{border-color:var(--blue);background:var(--blue-l)}
-
-.saved-name{font-size:13px;font-weight:700;color:var(--blue)}
-.saved-addr{font-size:11px;color:var(--text2)}
-.chk{width:20px;height:20px;background:var(--blue);border-radius:50%;opacity:0}
-.saved.on .chk{opacity:1}
-
-/* FORM */
-.f{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
-.f label{font-size:11px;font-weight:700;color:var(--text2)}
-
-.f input,.f select{
-  font-family:'Tajawal',sans-serif;
-  font-size:14px;
-  padding:11px 13px;
-  border:1.5px solid var(--border);
-  border-radius:10px;
-  background:var(--bg);
-  color:var(--text);
+.doc-header{
+  background:linear-gradient(135deg,#1B3FEE 0%,#1228CC 100%);
+  border-radius:16px;padding:28px 32px;margin-bottom:24px;
+  display:flex;align-items:center;justify-content:space-between;
 }
+.dh-left{display:flex;align-items:center;gap:16px}
+.logo-box{width:52px;height:52px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-box svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.logo-text .en{font-size:28px;font-weight:900;color:#fff;letter-spacing:2px;line-height:1}
+.logo-text .dot{width:8px;height:8px;background:var(--yellow);border-radius:50%;display:inline-block;margin-bottom:4px;margin-right:2px}
+.logo-text .ar{font-size:13px;color:rgba(255,255,255,.65);margin-top:2px;font-weight:500}
+.dh-right{text-align:left}
+.doc-num{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;margin-bottom:4px}
+.doc-num-val{font-size:22px;font-weight:900;color:#fff;letter-spacing:1.5px}
+.doc-date{font-size:12px;color:rgba(255,255,255,.55);margin-top:4px}
 
-.f input:focus{border-color:var(--blue);background:#fff;outline:none}
-
-/* BUTTON */
-.btn-sub{
-  width:100%;
-  background:var(--blue);
-  color:#fff;
-  font-family:'Tajawal',sans-serif;
-  font-size:16px;
-  font-weight:800;
-  padding:16px;
-  border:none;
-  border-radius:var(--r);
+/* ALERT STRIP */
+.alert-strip{
+  background:#FFF8E6;border:1.5px solid #F5C842;border-radius:10px;
+  padding:11px 16px;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;font-size:12.5px;color:#7A5000;font-weight:600;
 }
+.alert-strip svg{width:18px;height:18px;flex-shrink:0;fill:none;stroke:#C8860A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-.btn-sub:active{transform:scale(.98)}
-
-/* NAV */
-.bnav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:430px;
-  background:#fff;
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
+/* SECTION TITLE */
+.stitle{
+  font-size:13px;font-weight:800;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-bottom:10px;padding-right:2px;
+  display:flex;align-items:center;gap:8px;
 }
+.stitle::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+
+/* INFO BOX */
+.ibox{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px}
+.ibox-label{font-size:10.5px;font-weight:700;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.ibox-val{font-size:15px;font-weight:700;color:var(--text)}
+.ibox-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.ibox.accent{background:var(--blue-l);border-color:#C8D4FD}
+.ibox.accent .ibox-label{color:#5B7AF0}
+.ibox.accent .ibox-val{color:var(--blue)}
+.ibox.green{background:var(--green-l);border-color:#9AE8D6}
+.ibox.green .ibox-val{color:var(--green)}
+
+/* ROUTE VISUAL */
+.route-vis{
+  background:var(--bg);border:1.5px solid var(--border);border-radius:12px;
+  padding:20px 24px;margin-bottom:20px;
+  display:flex;align-items:center;gap:0;
+}
+.route-city{flex:1;text-align:center}
+.rc-label{font-size:11px;font-weight:700;color:var(--text3);margin-bottom:4px}
+.rc-name{font-size:20px;font-weight:900;color:var(--text)}
+.rc-addr{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4}
+.route-arrow{flex:0 0 80px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.arrow-line{height:2px;width:60px;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:2px;position:relative}
+.arrow-line::after{content:'◀';color:var(--green);font-size:12px;position:absolute;left:-8px;top:-8px}
+.carrier-pill{background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px}
+
+/* CARRIER CARD */
+.carrier-card{
+  border:2px solid var(--blue);border-radius:12px;
+  padding:18px 20px;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--blue-l);
+}
+.cc-left{display:flex;align-items:center;gap:14px}
+.cc-logo{width:50px;height:50px;background:#fff;border-radius:12px;border:1.5px solid #C8D4FD;display:flex;align-items:center;justify-content:center}
+.cc-name{font-size:18px;font-weight:900;color:var(--blue)}
+.cc-meta{font-size:12px;color:var(--text2);margin-top:3px}
+.cc-right{text-align:center}
+.cc-price{font-size:34px;font-weight:900;color:var(--blue);letter-spacing:-1px;line-height:1}
+.cc-price-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.cc-eta{background:var(--green-l);border:1.5px solid #9AE8D6;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--green);margin-top:8px;display:inline-block}
+
+/* WEIGHT / DIMS TABLE */
+.wtable{width:100%;border-collapse:collapse;margin-bottom:20px}
+.wtable th{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:10px 14px;text-align:right}
+.wtable th:first-child{border-radius:0 10px 0 0}
+.wtable th:last-child{border-radius:10px 0 0 0}
+.wtable td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);background:#fff}
+.wtable tr:last-child td{border-bottom:none}
+.wtable tr:last-child td:first-child{border-radius:0 0 10px 0}
+.wtable tr:last-child td:last-child{border-radius:0 0 0 10px}
+.tag-transit{background:#FFF7E6;color:#D4800A;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+
+/* PAYMENT */
+.pay-row{
+  display:flex;align-items:center;gap:12px;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;
+}
+.pay-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#000}
+.pay-name{font-size:15px;font-weight:800;color:var(--text)}
+.pay-desc{font-size:12px;color:var(--text3);margin-top:2px}
+.pay-chk{width:26px;height:26px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:auto;flex-shrink:0}
+.pay-chk svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+/* SUMMARY TABLE */
+.sum-table{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border)}
+.sum-row:last-child{border-bottom:none}
+.sr-l{font-size:13px;color:var(--text2);font-weight:600}
+.sr-v{font-size:14px;font-weight:700;color:var(--text)}
+.sum-row.tot{background:var(--blue);padding:16px 18px}
+.sum-row.tot .sr-l{color:rgba(255,255,255,.8);font-size:14px;font-weight:700}
+.sum-row.tot .sr-v{color:#fff;font-size:24px;font-weight:900;letter-spacing:-.5px}
+
+/* QR + BARCODE AREA */
+.qr-area{
+  display:flex;align-items:center;gap:24px;
+  background:var(--bg);border:1.5px dashed var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;
+}
+.qr-box{width:90px;height:90px;background:#fff;border:1.5px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qr-grid{display:grid;grid-template-columns:repeat(7,10px);grid-template-rows:repeat(7,10px);gap:1.5px}
+.qr-c{border-radius:2px}
+.qr-info .trk-num{font-size:24px;font-weight:900;color:var(--blue);letter-spacing:2px}
+.qr-info .trk-lbl{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:4px}
+.qr-info .scan-note{font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5}
+.barcode-svg{margin-top:8px}
+
+/* TERMS */
+.terms{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px}
+.terms-title{font-size:12px;font-weight:800;color:var(--text2);margin-bottom:8px}
+.terms ul{padding-right:18px;display:flex;flex-direction:column;gap:4px}
+.terms li{font-size:11.5px;color:var(--text3);line-height:1.55}
+
+/* FOOTER */
+.doc-footer{
+  border-top:1.5px solid var(--border);padding-top:16px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.df-left{font-size:11px;color:var(--text3)}
+.df-right{font-size:11px;color:var(--text3);text-align:left}
+.df-brand{font-size:13px;font-weight:800;color:var(--blue);margin-bottom:2px}
+
+/* STATUS STAMP */
+.stamp{
+  position:absolute;top:12px;left:12px;
+  border:3px solid var(--green);border-radius:8px;padding:4px 12px;
+  color:var(--green);font-size:14px;font-weight:900;letter-spacing:1px;
+  transform:rotate(-8deg);opacity:.85;
+}
+.carrier-card{position:relative;overflow:visible}
 </style>
 </head>
-
 <body>
 
-<div class="screen active" id="s-new">
+<!-- PRINT BAR -->
+<div class="print-bar no-print">
+  <span>بوليصة شحن — Mufa Platform</span>
+  <button class="btn-print" onclick="window.print()">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    طباعة / حفظ PDF
+  </button>
+</div>
 
-  <div class="sbar">
-    <div class="sbar-time">9:41</div>
-  </div>
+<div class="doc">
 
-  <div class="hdr">
-    <div class="hdr-title">
-      <h1>MUFA</h1>
-      <p>منصة الشحن المخفض</p>
+  <!-- ═══ HEADER ═══ -->
+  <div class="doc-header">
+    <div class="dh-left">
+      <div class="logo-box">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <div class="logo-text">
+        <div class="en">MUFA <span class="dot"></span></div>
+        <div class="ar">منصة الشحن المخفض — Saudi Arabia</div>
+      </div>
+    </div>
+    <div class="dh-right">
+      <div class="doc-num">رقم البوليصة</div>
+      <div class="doc-num-val">SMA-482910</div>
+      <div class="doc-date">تاريخ الإصدار: 1 مارس 2026 | 9:41 ص</div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-hdr">
-      <div class="ct">بيانات المرسل</div>
-      <div class="cs">المعلومات الأساسية</div>
-    </div>
+  <!-- ALERT -->
+  <div class="alert-strip">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    يرجى التأكد من مطابقة بيانات هذه البوليصة للشحنة الفعلية قبل تسليمها للناقل. الوزن الخاطئ قد يؤدي إلى رفض الشحنة.
+  </div>
 
-    <div class="card-body">
-      <div class="saved on">
-        <div>
-          <div class="saved-name">عبدالله الأحمدي</div>
-          <div class="saved-addr">الرياض</div>
+  <!-- ═══ SECTION 1: ROUTE ═══ -->
+  <div class="stitle">مسار الشحنة</div>
+  <div class="route-vis">
+    <div class="route-city" style="text-align:right;padding-right:8px">
+      <div class="rc-label">المرسل — نقطة الاستلام</div>
+      <div class="rc-name">الرياض</div>
+      <div class="rc-addr">حي النزهة، العنوان الوطني: RRYD1234</div>
+    </div>
+    <div class="route-arrow">
+      <div class="arrow-line"></div>
+      <div class="carrier-pill">سمسا</div>
+    </div>
+    <div class="route-city" style="text-align:left;padding-left:8px">
+      <div class="rc-label">المستلم — وجهة التوصيل</div>
+      <div class="rc-name">جدة</div>
+      <div class="rc-addr">حي الروضة، شارع الملك فهد</div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2: SENDER & RECEIVER ═══ -->
+  <div class="grid2" style="margin-bottom:20px">
+    <div>
+      <div class="stitle">بيانات المرسل</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="ibox">
+          <div class="ibox-label">الاسم الكامل</div>
+          <div class="ibox-val">عبدالله الأحمدي</div>
         </div>
-        <div class="chk"></div>
+        <div class="ibox">
+          <div class="ibox-label">رقم الجوال</div>
+          <div class="ibox-val" style="direction:ltr;text-align:right">+966 50 123 4567</div>
+        </div>
+        <div class="ibox">
+          <div class="ibox-label">المدينة والعنوان الوطني</div>
+          <div class="ibox-val">الرياض</div>
+          <div class="ibox-sub">RRYD1234</div>
+        </div>
       </div>
-
-      <div class="f">
-        <label>الاسم</label>
-        <input value="عبدالله الأحمدي">
-      </div>
-
-      <div class="f">
-        <label>الجوال</label>
-        <input value="0501234567">
+    </div>
+    <div>
+      <div class="stitle">بيانات المستلم</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="ibox">
+          <div class="ibox-label">الاسم الكامل</div>
+          <div class="ibox-val">محمد سالم العتيبي</div>
+        </div>
+        <div class="ibox">
+          <div class="ibox-label">رقم الجوال</div>
+          <div class="ibox-val" style="direction:ltr;text-align:right">+966 55 987 6543</div>
+        </div>
+        <div class="ibox">
+          <div class="ibox-label">المدينة والحي</div>
+          <div class="ibox-val">جدة</div>
+          <div class="ibox-sub">حي الروضة، شارع الملك فهد</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div style="padding:16px">
-    <button class="btn-sub">التالي</button>
+  <!-- ═══ SECTION 3: SHIPMENT DETAILS ═══ -->
+  <div class="stitle">تفاصيل الشحنة</div>
+  <table class="wtable">
+    <thead>
+      <tr>
+        <th>المحتوى</th>
+        <th>الوزن الفعلي</th>
+        <th>عدد الكراتين</th>
+        <th>نوع الشحنة</th>
+        <th>الحالة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700">ملابس وإكسسوارات</td>
+        <td style="font-weight:700">2.5 كجم</td>
+        <td style="font-weight:700">1 كرتون</td>
+        <td>داخلية</td>
+        <td><span class="tag-transit">قيد التوصيل</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══ SECTION 4: CARRIER ═══ -->
+  <div class="stitle">الناقل المختار</div>
+  <div class="carrier-card">
+    <div class="stamp">مؤكد ✓</div>
+    <div class="cc-left">
+      <div class="cc-logo">
+        <span style="font-family:'Tajawal',sans-serif;font-size:20px;font-weight:900;color:#6B21C8">سمسا</span>
+      </div>
+      <div>
+        <div class="cc-name">Saudi Post — سمسا</div>
+        <div class="cc-meta">الشركة السعودية للبريد | موثوقة ومعتمدة</div>
+        <div class="cc-eta">التوصيل خلال 2–3 أيام عمل</div>
+      </div>
+    </div>
+    <div class="cc-right">
+      <div class="cc-price">25</div>
+      <div class="cc-price-sub">ريال سعودي (شامل الضريبة)</div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 5: PAYMENT ═══ -->
+  <div class="stitle">طريقة الدفع</div>
+  <div class="pay-row" style="margin-bottom:20px;background:#000;border-color:#000">
+    <div class="pay-ico">
+      <svg viewBox="0 0 24 28" style="width:22px;height:26px" fill="white">
+        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+      </svg>
+    </div>
+    <div class="pay-info" style="flex:1">
+      <div class="pay-name" style="color:#fff">Apple Pay</div>
+      <div class="pay-desc" style="color:rgba(255,255,255,.6)">دفع تم بنجاح — ادفع بلمسة إصبع</div>
+    </div>
+    <div class="pay-chk">
+      <svg viewBox="0 0 12 12"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 6: SUMMARY ═══ -->
+  <div class="stitle">ملخص الفاتورة</div>
+  <div class="sum-table">
+    <div class="sum-row"><span class="sr-l">شركة الشحن</span><span class="sr-v">Saudi Post — سمسا</span></div>
+    <div class="sum-row"><span class="sr-l">رسوم الشحن الأساسية</span><span class="sr-v">25 ريال</span></div>
+    <div class="sum-row"><span class="sr-l">ضريبة القيمة المضافة (15%)</span><span class="sr-v">0 ريال (مشمولة)</span></div>
+    <div class="sum-row"><span class="sr-l">رسوم خدمة المنصة</span><span class="sr-v" style="color:var(--green)">مجاناً 🎁</span></div>
+    <div class="sum-row tot"><span class="sr-l">الإجمالي المدفوع</span><span class="sr-v">25 ريال</span></div>
+  </div>
+
+  <!-- ═══ SECTION 7: TRACKING / QR ═══ -->
+  <div class="stitle">رمز التتبع والباركود</div>
+  <div class="qr-area">
+    <!-- SVG QR placeholder -->
+    <div class="qr-box">
+      <svg viewBox="0 0 70 70" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <!-- Corner: top-right -->
+        <rect x="5" y="5" width="20" height="20" rx="3" fill="none" stroke="#1B3FEE" stroke-width="3"/>
+        <rect x="10" y="10" width="10" height="10" rx="1" fill="#1B3FEE"/>
+        <!-- Corner: top-left -->
+        <rect x="45" y="5" width="20" height="20" rx="3" fill="none" stroke="#1B3FEE" stroke-width="3"/>
+        <rect x="50" y="10" width="10" height="10" rx="1" fill="#1B3FEE"/>
+        <!-- Corner: bottom-right -->
+        <rect x="5" y="45" width="20" height="20" rx="3" fill="none" stroke="#1B3FEE" stroke-width="3"/>
+        <rect x="10" y="50" width="10" height="10" rx="1" fill="#1B3FEE"/>
+        <!-- Data dots -->
+        <rect x="30" y="5" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="37" y="5" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="30" y="12" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="5" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="5" y="37" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="12" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="30" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="37" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="44" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="52" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="60" y="30" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="30" y="37" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="44" y="37" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="52" y="44" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="60" y="37" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="30" y="44" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="37" y="52" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="44" y="52" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="52" y="60" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="30" y="60" width="5" height="5" rx="1" fill="#1B3FEE"/>
+        <rect x="60" y="52" width="5" height="5" rx="1" fill="#1B3FEE"/>
+      </svg>
+    </div>
+    <div class="qr-info" style="flex:1">
+      <div class="trk-lbl">رقم التتبع</div>
+      <div class="trk-num">SMA-482910</div>
+      <!-- Barcode SVG -->
+      <svg class="barcode-svg" viewBox="0 0 320 40" width="320" height="40" xmlns="http://www.w3.org/2000/svg">
+        <script>
+        </script>
+        <!-- Generate barcode bars pattern for SMA-482910 -->
+        <rect x="0" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="4" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="10" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="13" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="17" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="24" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="27" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="31" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="37" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="40" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="47" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="51" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="54" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="60" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="64" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="71" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="74" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="78" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="84" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="87" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="94" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="98" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="101" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="107" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="111" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="114" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="121" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="125" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="131" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="134" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="138" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="145" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="148" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="152" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="158" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="162" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="165" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="172" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="176" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="179" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="185" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="189" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="196" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="199" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="203" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="209" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="212" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="216" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="223" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="227" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="230" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="236" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="240" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="243" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="250" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="254" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="260" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="263" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="267" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="274" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="277" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="281" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="287" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="291" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="294" y="0" width="4" height="40" fill="#1B3FEE"/>
+        <rect x="301" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="305" y="0" width="1" height="40" fill="#1B3FEE"/>
+        <rect x="308" y="0" width="3" height="40" fill="#1B3FEE"/>
+        <rect x="314" y="0" width="2" height="40" fill="#1B3FEE"/>
+        <rect x="318" y="0" width="2" height="40" fill="#1B3FEE"/>
+      </svg>
+      <div class="scan-note">امسح رمز QR أو استخدم رقم التتبع على تطبيق سمسا أو منصة Mufa لتتبع شحنتك.</div>
+    </div>
+    <div style="width:80px;text-align:center;flex-shrink:0">
+      <div style="background:var(--green-l);border:1.5px solid #9AE8D6;border-radius:10px;padding:10px 8px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px">حالة الشحنة</div>
+        <div style="font-size:13px;font-weight:900;color:var(--green)">نشطة</div>
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;margin-top:6px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 8: TERMS ═══ -->
+  <div class="stitle">الشروط والأحكام</div>
+  <div class="terms">
+    <div class="terms-title">يرجى الاطلاع على الشروط التالية قبل تسليم الشحنة</div>
+    <ul>
+      <li>يلتزم المرسل بتغليف الشحنة بشكل مناسب يضمن سلامة المحتوى أثناء النقل.</li>
+      <li>الوزن المدوّن في البوليصة هو الوزن المعتمد؛ أي اختلاف قد يؤدي إلى رسوم إضافية أو رفض الشحنة.</li>
+      <li>تخضع الشحنات للتفتيش الأمني من قبل شركة الشحن وفق اللوائح السعودية.</li>
+      <li>لا تتحمل منصة Mufa المسؤولية عن التأخير الناجم عن ظروف خارجة عن السيطرة (أحوال جوية، عطل مركبات).</li>
+      <li>يحق لشركة سمسا رفض الشحنة إذا ثبت احتواؤها على مواد مقيدة أو محظورة.</li>
+      <li>في حال الفقدان أو التلف، يتم التعويض وفق سياسة شركة سمسا المعتمدة (حتى 500 ريال).</li>
+      <li>هذه البوليصة صالحة لمدة 7 أيام من تاريخ الإصدار.</li>
+    </ul>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="grid4" style="margin-bottom:24px">
+    <div class="ibox accent" style="text-align:center">
+      <div class="ibox-label" style="text-align:center">المبلغ المدفوع</div>
+      <div class="ibox-val" style="font-size:22px;font-weight:900">25 ر</div>
+    </div>
+    <div class="ibox green" style="text-align:center">
+      <div class="ibox-label" style="text-align:center;color:#05b486aa">وقت التوصيل</div>
+      <div class="ibox-val" style="font-size:15px">2–3 أيام</div>
+    </div>
+    <div class="ibox" style="text-align:center">
+      <div class="ibox-label" style="text-align:center">عدد الكراتين</div>
+      <div class="ibox-val" style="font-size:22px;font-weight:900">1</div>
+    </div>
+    <div class="ibox" style="text-align:center">
+      <div class="ibox-label" style="text-align:center">الوزن</div>
+      <div class="ibox-val" style="font-size:22px;font-weight:900">2.5 كج</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="df-left">
+      <div class="df-brand">MUFA · منصة الشحن المخفض</div>
+      mufa.sa | support@mufa.sa | 920-MUFA-SA
+    </div>
+    <div class="df-right">
+      هذه الوثيقة صادرة إلكترونياً ولا تحتاج إلى ختم ورقي.<br>
+      رقم السجل التجاري: 1010XXXXXX | الرياض، المملكة العربية السعودية
+    </div>
   </div>
 
 </div>
-
 </body>
 </html>
